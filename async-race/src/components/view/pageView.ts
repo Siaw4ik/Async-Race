@@ -48,7 +48,7 @@ export default class PagesView {
                 </input>
                 <input type="color" class="update_color_input input_small">
                 </input>
-                <button class="winners_btn btn_input">
+                <button class="update_btn btn_input">
                   UPDATE
                 </button>
               </div>
@@ -98,8 +98,8 @@ export default class PagesView {
     div.setAttribute("dataName", `${name}`);
     div.innerHTML = `
         <div class="car_buttons">
-            <button class="car_btn select ${id}">SELECT</button>
-            <button id="remove-${id}"class="car_btn remove ${id}">REMOVE</button>
+            <button id="select-${id}" class="car_btn select ${id}">SELECT</button>
+            <button id="remove-${id}" class="car_btn remove ${id}">REMOVE</button>
         </div>
         <div class="road">
             <div>
@@ -111,14 +111,5 @@ export default class PagesView {
         </div>
     `;
     (document.querySelector(".garage_cars") as HTMLElement).appendChild(div);
-    /* document.querySelectorAll(".select").forEach((btn) => () => {
-      btn.addEventListener("click", (e) => {
-        console.log("dfdfdf");
-        const { target } = e;
-        if (target) {
-          console.log((target as HTMLElement).getAttribute("class"));
-        }
-      });
-    }); */
   }
 }

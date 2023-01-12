@@ -48,6 +48,7 @@ export default class Garage {
       console.log(response.status);
     } else {
       console.log(`Error HTTP: ${response.status}`);
+      console.log("error");
     }
   }
 

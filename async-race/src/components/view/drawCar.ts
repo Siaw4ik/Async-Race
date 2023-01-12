@@ -13,12 +13,24 @@ export default class DrawCar {
     a.then((data) =>
       data.forEach((car) => {
         this.page.createCar(car.name, car.color, car.id);
-        const btn = document.querySelector(`#remove-${car.id}`);
-        console.log(btn);
-        btn?.addEventListener("click", () => {
+        const removeBtn = document.querySelector(`#remove-${car.id}`);
+        console.log(removeBtn);
+        removeBtn?.addEventListener("click", () => {
           console.log(car.id);
           this.deleteCar(car.id);
           (document.querySelector(`#car-${car.id}`) as HTMLElement).remove();
+        });
+        const selectBtn = document.querySelector(`#select-${car.id}`);
+        selectBtn?.addEventListener("click", () => {
+          console.log(car.id);
+          (document.querySelector(".update_input") as HTMLInputElement).value =
+            car.name;
+          (document.querySelector(
+            ".update_input"
+          ) as HTMLInputElement).dataset.id = `${car.id}`;
+          (document.querySelector(
+            ".update_color_input"
+          ) as HTMLInputElement).value = car.color;
         });
       })
     );
@@ -30,7 +42,6 @@ export default class DrawCar {
   }
 
   async addCar(carColor: string, carName: string) {
-    console.log("Click");
     this.garage.postCar(carColor, carName, "/garage");
   }
 
@@ -103,10 +114,8 @@ export default class DrawCar {
   }
 
   async updateCar(id: number, carColor: string, carName: string) {
-    document.querySelector(".update")?.addEventListener("click", () => {
-      console.log("Click");
-      this.garage.updateCar("/garage", id, carColor, carName);
-    });
+    console.log("Click");
+    this.garage.updateCar("/garage", id, carColor, carName);
   }
 
   async deleteCar(id: number) {
