@@ -13,7 +13,7 @@ export default class Garage {
     return data;
   }
 
-  async createCar(carColor: string, carName: string, optionLink: string) {
+  async postCar(carColor: string, carName: string, optionLink: string) {
     const response = await fetch(`${this.baseLink}${optionLink}`, {
       method: "POST",
       headers: {

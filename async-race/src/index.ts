@@ -1,26 +1,29 @@
 import "./style.css";
 import DrawCar from "./components/view/drawCar";
+import PagesView from "./components/view/pageView";
+/* import Garage from "./components/model/Garage"; */
+
+const page = new PagesView();
+
+page.createContainer();
 
 const a = new DrawCar();
+/* const garage = new Garage("http://127.0.0.1:3000"); */
+
+const garagePageBtn = document.querySelector(".garage_btn");
+const winnersPageBtn = document.querySelector(".winners_btn");
+
+(garagePageBtn as HTMLElement).addEventListener("click", () => {
+  page.showPageElements("garage_page", "winners_page");
+});
+(winnersPageBtn as HTMLElement).addEventListener("click", () => {
+  page.showPageElements("winners_page", "garage_page");
+});
+
 a.drawCars();
-a.drawCar(2);
-a.drawCar(1);
-a.drawCar(3);
-a.drawCar(4);
-// a.drawCar(5);
-a.addCar("purple", "ZIZER");
-a.updateCar(12, "QWERTY", "My");
-a.deleteCar(12);
-a.deleteCar(11);
-a.deleteCar(10);
-a.deleteCar(16);
 
-console.log("Hello World!");
-
-/* async function getCars(baseLink: string, optionLink: string) {
-  const response = await fetch(`${baseLink}${optionLink}`);
-  const data = await response.json();
-  return data;
-}
-
-console.log(getCars("http://127.0.0.1:3000", "/garage")); */
+const btnGenerate = document.querySelector(".btn_generate");
+btnGenerate?.addEventListener("click", () => {
+  a.generateCars();
+  a.drawCars();
+});
