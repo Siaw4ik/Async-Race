@@ -8,3 +8,9 @@ export type State = {
   currentPage: number;
   totalCars: number;
 };
+
+export type Winner = {
+  id: number;
+  wins: number;
+  time: number;
+};

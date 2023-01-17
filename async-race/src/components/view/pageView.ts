@@ -1,15 +1,4 @@
-import Garage from "../model/Garage";
-
 export default class PagesView {
-  garage = new Garage();
-
-  async deleteCar(id: number) {
-    document.querySelector(".delete")?.addEventListener("click", () => {
-      console.log("Click");
-      this.garage.deleteCar("/garage", id);
-    });
-  }
-
   showPageElements(show: string, hide: string) {
     document
       .querySelector(`.${show}`)
