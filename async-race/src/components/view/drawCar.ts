@@ -117,16 +117,15 @@ export default class DrawCar {
   refreshStats() {
     const state = this.getState();
 
-    (document.querySelector(".page") as HTMLElement).textContent = `Page #${
+    (document.querySelector(".garage_p") as HTMLElement).textContent = `Page #${
       state.currentPage > 0 ? state.currentPage : 1
     }`;
     (document.querySelector(
-      ".garage_volume"
+      ".garage_h2"
     ) as HTMLElement).textContent = `Garage (${state.totalCars})`;
   }
 
   async updateCar(id: number, carColor: string, carName: string) {
-    console.log("Click");
     this.garage.updateCar("/garage", id, carColor, carName);
   }
 

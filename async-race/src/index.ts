@@ -76,6 +76,7 @@ document.querySelector(".create_btn")?.addEventListener("click", () => {
 });
 
 document.querySelector(".update_btn")?.addEventListener("click", () => {
+  console.log("click update");
   updateColor = (document.querySelector(
     ".update_color_input"
   ) as HTMLInputElement).value;
@@ -89,3 +90,38 @@ document.querySelector(".update_btn")?.addEventListener("click", () => {
   (document.querySelector(".garage_cars") as HTMLElement).innerHTML = "";
   cars.drawCars(cars.getState().currentPage);
 });
+
+(document.querySelector(".garage_btn-prev") as HTMLElement).addEventListener(
+  "click",
+  () => {
+    const currentState = cars.getState();
+    if (currentState.currentPage > 1) {
+      currentState.currentPage -= 1;
+      state.currentPage -= 1;
+      localStorage.setItem("state", JSON.stringify(currentState));
+      console.log(currentState.currentPage);
+      (document.querySelector(".garage_cars") as HTMLElement).innerHTML = "";
+
+      cars.drawCars(currentState.currentPage);
+      cars.refreshStats();
+    }
+  }
+);
+
+(document.querySelector(".garage_btn-next") as HTMLElement).addEventListener(
+  "click",
+  async () => {
+    const currentState = cars.getState();
+    const maxPage = Math.ceil(Number(currentState.totalCars) / 7);
+    if (currentState.currentPage < maxPage) {
+      currentState.currentPage += 1;
+      state.currentPage += 1;
+      localStorage.setItem("state", JSON.stringify(currentState));
+      console.log(currentState.currentPage);
+      (document.querySelector(".garage_cars") as HTMLElement).innerHTML = "";
+
+      cars.drawCars(currentState.currentPage);
+      cars.refreshStats();
+    }
+  }
+);

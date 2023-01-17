@@ -66,10 +66,12 @@ export default class PagesView {
               <h2 class="garage_h2">Garage</h2>
               <p class="garage_p">Page</p>
             </div>
-            <div class="garage_cars"></div>
-            <div class="garage_buttons">
-              <button class="btn garage_btn-prev btn-prev-next">PREV</button>
-              <button class="btn garage_btn-next btn-prev-next">NEXT</button>
+            <div class="garage_main">
+              <div class="garage_cars"></div>
+              <div class="garage_buttons">
+                <button class="btn garage_btn-prev btn-prev-next">PREV</button>
+                <button class="btn garage_btn-next btn-prev-next">NEXT</button>
+              </div>
             </div>
           </div>
           </div>
