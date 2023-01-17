@@ -78,13 +78,28 @@ export default class PagesView {
           </div>
           <div class="winners_page" style="display: none;">
             <div class="winners_header">
-              <h2>Winners</h2>
-              <p>Page</p>
+              <h2 class="winners_header_h2">Winners</h2>
+              <p class="winners_header_p">Page</p>
             </div>
-            <div class="winners_result"></div>
+            <table class="winners_result">
+              <thead class"t_head">
+                <tr>
+                  <th class="th_number">Number</th>
+                  <th class="th_car">Car View</th>
+                  <th class="th_name">Car Name and Model</th>
+                  <th class="th_wins">Wins</th>
+                  <th class="th_time">Best time, s</th>
+                </tr>
+              </thead>
+              <tbody class="tbody">
+                <tr class="removable_row">
+                  <td colspan="5">No statistic for a while</td>
+                </tr>
+              </tbody>
+            </table>
             <div class="winners_buttons">
-              <button class="winners_btn-prev btn-prev-next">PREV</button>
-              <button class="winners_btn-next btn-prev-next">NEXT</button>
+              <button class="btn winners_btn-prev btn-prev-next">PREV</button>
+              <button class="btn winners_btn-next btn-prev-next">NEXT</button>
             </div>
           </div>`;
 
