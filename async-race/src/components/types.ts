@@ -3,3 +3,8 @@ export type Car = {
   color: string;
   id: number;
 };
+
+export type State = {
+  currentPage: number;
+  totalCars: number;
+};

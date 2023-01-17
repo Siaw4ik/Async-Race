@@ -1,9 +1,7 @@
 import Garage from "../model/Garage";
 
 export default class PagesView {
-  baseLink = "http://127.0.0.1:3000";
-
-  garage = new Garage(this.baseLink);
+  garage = new Garage();
 
   async deleteCar(id: number) {
     document.querySelector(".delete")?.addEventListener("click", () => {

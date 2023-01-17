@@ -3,10 +3,17 @@ import DrawCar from "./components/view/drawCar";
 import PagesView from "./components/view/pageView";
 /* import Garage from "./components/model/Garage"; */
 
+const state = {
+  currentPage: 1,
+  totalCars: 0,
+};
+
+localStorage.setItem("state", JSON.stringify(state));
+
 const page = new PagesView();
 page.createContainer();
 
-const a = new DrawCar();
+const cars = new DrawCar();
 
 const garagePageBtn = document.querySelector(".garage_btn");
 const winnersPageBtn = document.querySelector(".winners_btn");
@@ -18,13 +25,17 @@ const winnersPageBtn = document.querySelector(".winners_btn");
   page.showPageElements("winners_page", "garage_page");
 });
 
-a.drawCars();
+cars.drawCars(state.currentPage);
+cars.refreshStats();
 
-const btnGenerate = document.querySelector(".btn_generate");
-btnGenerate?.addEventListener("click", () => {
-  a.generateCars();
-  a.drawCars();
-});
+(document.querySelector(".btn_generate") as HTMLElement).addEventListener(
+  "click",
+  () => {
+    cars.generateCars().then(() => {
+      cars.drawCars(cars.getState().currentPage);
+    });
+  }
+);
 
 let createColor: string = "rgb(0, 0, 0)";
 let creteName: string;
@@ -57,9 +68,10 @@ document.querySelector(".update_input")?.addEventListener("input", () => {
 document.querySelector(".create_btn")?.addEventListener("click", () => {
   if (creteName) {
     console.log("create");
-    a.addCar(createColor, creteName);
+    cars.addCar(createColor, creteName);
     (document.querySelector(".garage_cars") as HTMLElement).innerHTML = "";
-    a.drawCars();
+    cars.drawCars(cars.getState().currentPage);
+    cars.refreshStats();
   }
 });
 
@@ -72,9 +84,8 @@ document.querySelector(".update_btn")?.addEventListener("click", () => {
   const updateId = (document.querySelector(
     ".update_input"
   ) as HTMLInputElement).getAttribute("data-id");
-  console.log(updateId);
-  console.log(updateName);
-  a.updateCar(Number(updateId), updateColor, updateName);
+
+  cars.updateCar(Number(updateId), updateColor, updateName);
   (document.querySelector(".garage_cars") as HTMLElement).innerHTML = "";
-  a.drawCars();
+  cars.drawCars(cars.getState().currentPage);
 });
