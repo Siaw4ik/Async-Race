@@ -23,14 +23,28 @@ export default class DrawCar {
     (document.querySelector(
       `#remove-${car.id}`
     ) as HTMLElement).addEventListener("click", () => {
-      console.log(car.id);
       this.deleteCar(car.id);
       (document.querySelector(`#car-${car.id}`) as HTMLElement).remove();
+
+      if (
+        (document.querySelector(".garage_cars") as HTMLElement).innerHTML === ""
+      ) {
+        this.updateStorageCurrPage();
+        this.refreshStats();
+
+        localStorage.setItem("state", JSON.stringify(this.getState()));
+        (document.querySelector(".garage_cars") as HTMLElement).innerHTML = "";
+        this.drawCars(this.getState().currentPage);
+        return;
+      }
+
+      (document.querySelector(".garage_cars") as HTMLElement).innerHTML = "";
+      this.drawCars(this.getState().currentPage);
     });
+
     (document.querySelector(
       `#select-${car.id}`
     ) as HTMLElement).addEventListener("click", () => {
-      console.log(car.id);
       (document.querySelector(".update_input") as HTMLInputElement).value =
         car.name;
       (document.querySelector(
@@ -44,6 +58,7 @@ export default class DrawCar {
 
   async addCar(carColor: string, carName: string) {
     this.garage.postCar(carColor, carName, "/garage");
+    this.refreshStats();
   }
 
   generateCars() {
