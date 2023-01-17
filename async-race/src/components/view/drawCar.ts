@@ -1,11 +1,14 @@
 import Garage from "../model/Garage";
 import PagesView from "./pageView";
 import { State, Car } from "../types";
+import Drive from "./Drive";
 
 export default class DrawCar {
   garage = new Garage();
 
   page = new PagesView();
+
+  drive = new Drive();
 
   async drawCars(page: number) {
     const carsPerPage = 7;
@@ -53,6 +56,34 @@ export default class DrawCar {
       (document.querySelector(
         ".update_color_input"
       ) as HTMLInputElement).value = car.color;
+    });
+
+    const startEngineBtn = document.querySelector(
+      `.btn-A-${car.id}`
+    ) as HTMLElement;
+    const stopEngineBtn = document.querySelector(
+      `.btn-B-${car.id}`
+    ) as HTMLElement;
+
+    startEngineBtn.addEventListener("click", () => {
+      if (startEngineBtn.getAttribute("is-clicked") === "true") {
+        console.log("Engine is already started!");
+        return;
+      }
+      this.drive.startCarEngine(car.id, "started");
+      startEngineBtn.setAttribute("is-clicked", "true");
+      stopEngineBtn.setAttribute("is-clicked", "false");
+    });
+
+    stopEngineBtn.addEventListener("click", () => {
+      if (stopEngineBtn.getAttribute("is-clicked") === "true") {
+        console.log("Engine is already stopped!");
+        return;
+      }
+
+      this.drive.stopCarEngine(car.id, "stopped");
+      startEngineBtn.setAttribute("is-clicked", "false");
+      stopEngineBtn.setAttribute("is-clicked", "true");
     });
   }
 

@@ -111,7 +111,7 @@ body {
   font-size: 22px;
 }
 
-.garage main {
+.garage_main {
   display: flex;
   flex-direction: column;
   justify-content: space-between;

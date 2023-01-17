@@ -1,6 +1,7 @@
 import "./style.css";
 import DrawCar from "./components/view/drawCar";
 import PagesView from "./components/view/pageView";
+import Drive from "./components/view/Drive";
 /* import Garage from "./components/model/Garage"; */
 
 const state = {
@@ -14,6 +15,8 @@ const page = new PagesView();
 page.createContainer();
 
 const cars = new DrawCar();
+
+const drive = new Drive();
 
 const garagePageBtn = document.querySelector(".garage_btn");
 const winnersPageBtn = document.querySelector(".winners_btn");
@@ -125,3 +128,33 @@ document.querySelector(".update_btn")?.addEventListener("click", () => {
     }
   }
 );
+
+const raceBtn = document.querySelector(".btn_race");
+const resetBtn = document.querySelector(".btn_reset");
+
+(raceBtn as HTMLElement).addEventListener("click", () => {
+  if (raceBtn?.getAttribute("is-pushed") === "true") {
+    console.log("All engines are already started");
+    return;
+  }
+  document.querySelectorAll(".car").forEach((elem) => {
+    const carId = elem.getAttribute("id")?.slice(13);
+    drive.startCarEngine(Number(carId), "started");
+  });
+
+  (raceBtn as HTMLElement).setAttribute("is-pushed", "true");
+  (resetBtn as HTMLElement).setAttribute("is-pushed", "false");
+});
+
+(resetBtn as HTMLElement).addEventListener("click", () => {
+  if (resetBtn?.getAttribute("is-pushed") === "true") {
+    console.log("All engines are already stopped");
+    return;
+  }
+  document.querySelectorAll(".car").forEach((elem) => {
+    const carId = elem.getAttribute("id")?.slice(13);
+    drive.stopCarEngine(Number(carId), "stopped");
+  });
+  (raceBtn as HTMLElement).setAttribute("is-pushed", "false");
+  (resetBtn as HTMLElement).setAttribute("is-pushed", "true");
+});

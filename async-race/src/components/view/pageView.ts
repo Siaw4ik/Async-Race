@@ -51,10 +51,10 @@ export default class PagesView {
                 </button>
               </div>
               <div class="buttons_block">
-                <button class="btn down-input_btn btn_page">
+                <button class="btn down-input_btn btn_page btn_race">
                   RACE
                 </button>
-                <button class="btn down-input_btn btn_page">
+                <button class="btn down-input_btn btn_page btn_reset">
                   RESET
                 </button>
                 <button class="btn down-input_btn btn_generate">
