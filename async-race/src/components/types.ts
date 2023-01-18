@@ -7,6 +7,11 @@ export type Car = {
 export type State = {
   currentPage: number;
   totalCars: number;
+  currentBoardPage: number;
+  totalWinnersCars: number;
+  sort: string;
+  order: string;
+  orderInner: string;
 };
 
 export type Winner = {

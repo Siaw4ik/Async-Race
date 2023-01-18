@@ -1,5 +1,5 @@
 body {
-  background-color: rgba(0, 0, 0, 0.10);
+  background-color: rgb(220, 220, 220);
   height: 100vh;
   margin: 0;
 }
@@ -8,6 +8,8 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  position: relative;
+  z-index: 0;
 }
 
 .btn {
@@ -31,6 +33,8 @@ body {
   padding: 5px 15px;
   margin-bottom: 10px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 30;
 }
 
 .btn_page {
@@ -38,8 +42,9 @@ body {
 }
 
 .wrapper {
-  margin: 0 15px;
   height: 100%;
+  position: relative;
+  z-index: 0;
 }
 
 
@@ -86,6 +91,8 @@ body {
 
 .garage_page,
 .winners_page {
+  padding: 0 15px;
+  box-sizing: content-box;
   display:flex;
   flex-direction: column;
   align-content: space-around;
@@ -208,7 +215,20 @@ body {
 }
 
 .winners_page {
-  margin: 0 15px;
+  display: none;
+}
+
+.winners_page.active {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  background-color: rgb(220, 220, 220);
+  box-sizing: content-box;
+  height: 100%;
+  width: 100vw;
+  box-sizing: border-box;
 }
 
 .winners_header {
@@ -231,5 +251,32 @@ table, th, td {
 
 th, td {
   padding: 5px 10px;
+}
+
+.tbody .winner-car {
+  width: 80px;
+}
+
+.show-winner {
+  position: absolute;
+  z-index: 1;
+  top: 11.5vh;
+  left: 40vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 55px;
+  border: 3px solid #ff5a00;
+  background-color: rgb(255, 251, 251);
+  border-radius: 5px;
+}
+
+.show-winner p {
+  margin: 0;
+  color: #ff5a00;
+  font-weight: 600;
+  font-size: 22px;
+  text-align: center;
 }
 

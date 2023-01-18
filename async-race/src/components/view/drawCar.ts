@@ -2,6 +2,8 @@ import Garage from "../model/Garage";
 import PagesView from "./pageView";
 import { State, Car } from "../types";
 import Drive from "./Drive";
+import Winners from "../model/Winners";
+import WinnersTable from "./drawWinners";
 
 export default class DrawCar {
   garage = new Garage();
@@ -9,6 +11,10 @@ export default class DrawCar {
   page = new PagesView();
 
   drive = new Drive();
+
+  winners = new Winners();
+
+  table = new WinnersTable();
 
   async drawCars(page: number) {
     const carsPerPage = 7;
@@ -43,6 +49,45 @@ export default class DrawCar {
 
       (document.querySelector(".garage_cars") as HTMLElement).innerHTML = "";
       this.drawCars(this.getState().currentPage);
+
+      this.winners.deleteWinner(car.id).then(() => {
+        const state = this.getState();
+        state.totalWinnersCars -= 1;
+        localStorage.setItem("state", JSON.stringify(state));
+        (document.querySelector(
+          ".winners_header_h2"
+        ) as HTMLElement).textContent = `Winners (${state.totalWinnersCars})`;
+
+        (document.querySelector(
+          ".winners_header_p"
+        ) as HTMLElement).textContent = `Page #${state.currentBoardPage}`;
+
+        (document.querySelector(".tbody") as HTMLElement).innerHTML = "";
+
+        if (state.sort === "") {
+          this.winners.getWinners(state.currentBoardPage).then((winners) => {
+            this.table.resultsProcessing(
+              winners,
+              (state.currentBoardPage - 1) * 10
+            );
+          });
+        }
+
+        if (state.sort) {
+          this.winners
+            .getSortedWinners(
+              state.sort,
+              state.orderInner,
+              state.currentBoardPage
+            )
+            .then((result) => {
+              this.table.resultsProcessing(
+                result,
+                (state.currentBoardPage - 1) * 10
+              );
+            });
+        }
+      });
     });
 
     (document.querySelector(
@@ -176,8 +221,9 @@ export default class DrawCar {
   }
 
   async deleteCar(id: number) {
-    console.log("Click");
     this.garage.deleteCar("/garage", id);
+    this.updateStorageCarsAmount(this.getState().totalCars - 1);
+    this.refreshStats();
   }
 
   updateStorageCarsAmount(totalCars: number) {
@@ -197,6 +243,11 @@ export default class DrawCar {
     let state: State = {
       currentPage: 0,
       totalCars: 0,
+      currentBoardPage: 1,
+      totalWinnersCars: 0,
+      sort: "",
+      order: "",
+      orderInner: "",
     };
     if (typeof storage === "string" && storage.length > 0) {
       state = JSON.parse(storage);
