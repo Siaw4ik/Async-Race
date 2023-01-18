@@ -81,19 +81,17 @@ export default class Drive {
                     });
                 })
                 .catch(() => {
-                  this.winners
-                    .createWinner(carId, 1, Number(carTime))
-                    .then(() => {
-                      if (name && color) {
-                        console.log("есть инфа о имени и цвете");
-                        this.table.addWinnerToWinnersTable(carId, name, color);
-                        if (document.querySelector(".removable_row")) {
-                          (document.querySelector(
-                            ".removable_row"
-                          ) as HTMLElement).remove();
-                        }
-                      }
-                    });
+                  console.log(`We have new Winner - Car ${carId}`);
+                  this.winners.createWinner(carId, 1, Number(carTime));
+                  if (name && color) {
+                    console.log("есть инфа о имени и цвете");
+                    this.table.addWinnerToWinnersTable(carId, name, color);
+                    if (document.querySelector(".removable_row")) {
+                      (document.querySelector(
+                        ".removable_row"
+                      ) as HTMLElement).remove();
+                    }
+                  }
                 });
             }
           }
