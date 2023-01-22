@@ -43,14 +43,14 @@ const config = {
     new CleanWebpackPlugin(),
     new EslintPlugin({ extensions: "ts" }),
 
-    /* new CopyWebpackPlugin({
+    new CopyWebpackPlugin({
       patterns: [
         {
           from: "src/assets/favicon.ico",
           to: "assets/favicon.ico",
         },
       ],
-    }), */
+    }),
   ],
 };
 
