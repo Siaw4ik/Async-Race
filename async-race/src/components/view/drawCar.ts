@@ -53,6 +53,7 @@ export default class DrawCar {
       this.winners.deleteWinner(car.id).then(() => {
         const state = this.getState();
         state.totalWinnersCars -= 1;
+        /* let pageTable = state.currentBoardPage; */
         localStorage.setItem("state", JSON.stringify(state));
         (document.querySelector(
           ".winners_header_h2"
@@ -63,13 +64,29 @@ export default class DrawCar {
         ) as HTMLElement).textContent = `Page #${state.currentBoardPage}`;
 
         (document.querySelector(".tbody") as HTMLElement).innerHTML = "";
-
         if (state.sort === "") {
           this.winners.getWinners(state.currentBoardPage).then((winners) => {
-            this.table.resultsProcessing(
-              winners,
-              (state.currentBoardPage - 1) * 10
-            );
+            if (winners.length === 0 && state.currentBoardPage > 1) {
+              state.currentBoardPage -= 1;
+              localStorage.setItem("state", JSON.stringify(state));
+              this.winners
+                .getWinners(state.currentBoardPage)
+                .then((newwinners) => {
+                  (document.querySelector(
+                    ".winners_header_p"
+                  ) as HTMLElement).textContent = `Page #${state.currentBoardPage}`;
+                  this.table.resultsProcessing(
+                    newwinners,
+                    (state.currentBoardPage - 1) * 10
+                  );
+                });
+            }
+            if (winners.length > 0) {
+              this.table.resultsProcessing(
+                winners,
+                (state.currentBoardPage - 1) * 10
+              );
+            }
           });
         }
 
@@ -81,10 +98,35 @@ export default class DrawCar {
               state.currentBoardPage
             )
             .then((result) => {
-              this.table.resultsProcessing(
+              if (result.length === 0 && state.currentBoardPage > 1) {
+                state.currentBoardPage -= 1;
+                localStorage.setItem("state", JSON.stringify(state));
+                this.winners
+                  .getSortedWinners(
+                    state.sort,
+                    state.orderInner,
+                    state.currentBoardPage
+                  )
+                  .then((newwinners) => {
+                    (document.querySelector(
+                      ".winners_header_p"
+                    ) as HTMLElement).textContent = `Page #${state.currentBoardPage}`;
+                    this.table.resultsProcessing(
+                      newwinners,
+                      (state.currentBoardPage - 1) * 10
+                    );
+                  });
+              }
+              if (result.length > 0) {
+                this.table.resultsProcessing(
+                  result,
+                  (state.currentBoardPage - 1) * 10
+                );
+              }
+              /* this.table.resultsProcessing(
                 result,
                 (state.currentBoardPage - 1) * 10
-              );
+              ); */
             });
         }
       });

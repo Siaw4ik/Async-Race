@@ -46,7 +46,7 @@ export default class Garage {
     });
 
     if (response.ok) {
-      console.log(response.status);
+      console.log(`Car is created with cod: ${response.status}`);
       console.log(await response.json());
     } else {
       console.log(`Error HTTP: ${response.status}`);
@@ -68,10 +68,9 @@ export default class Garage {
     });
 
     if (response.ok) {
-      console.log(response.status);
+      console.log(`Car is updated with ${response.status}`);
     } else {
-      console.log(`Error HTTP: ${response.status}`);
-      console.log("error");
+      console.log(`Error: Car isn't found, not UPDATE with ${response.status}`);
     }
   }
 
@@ -81,9 +80,9 @@ export default class Garage {
     });
 
     if (response.ok) {
-      console.log(response.status);
+      console.log(`Car is deleted with ${response.status}`);
     } else {
-      console.log(`Error HTTP: ${response.status}`);
+      console.log(`Error: Car isn't found, not DELETE with ${response.status}`);
     }
   }
 }

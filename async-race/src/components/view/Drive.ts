@@ -23,7 +23,7 @@ export default class Drive {
       const carTime = (result.distance / result.velocity / 1000).toFixed(2);
       selectedCar.setAttribute(
         "style",
-        `left: ${distance}px; transition: all ${carTime}s ease`
+        `left: ${distance}px; transition: all ${carTime}s ease-in`
       );
 
       const btnA = document.querySelector(`.btn-A-${carId}`) as HTMLElement;
@@ -37,17 +37,16 @@ export default class Drive {
       this.engine
         .switchCarEngineToDrive(carId, "drive")
         .catch((error) => {
-          console.log(
-            `Car-${carId} has been stopped suddenly. It's engine was broken down. With ${error}`
-          );
+          console.log(`Car-${carId} engine was broken down. With ${error}`);
           const info = (selectedCar as HTMLElement).getBoundingClientRect();
 
           selectedCar.setAttribute(
             "style",
-            `left: ${info.left.toFixed(0)}px; transition: all 0s ease`
+            `left: ${info.left.toFixed(0)}px; transition: all 0s ease-in`
           );
         })
         .then((res) => {
+          console.log(res);
           if (res) {
             if (this.raceBoard.length === 0) {
               this.raceBoard.push({
@@ -84,13 +83,12 @@ export default class Drive {
                   console.log(`We have new Winner - Car ${carId}`);
                   this.winners.createWinner(carId, 1, Number(carTime));
                   if (name && color) {
-                    console.log("есть инфа о имени и цвете");
-                    this.table.addWinnerToWinnersTable(carId, name, color);
                     if (document.querySelector(".removable_row")) {
                       (document.querySelector(
                         ".removable_row"
                       ) as HTMLElement).remove();
                     }
+                    this.table.addWinnerToWinnersTable(carId, name, color);
                   }
                 });
             }
@@ -145,7 +143,7 @@ export default class Drive {
     const winnerTime = document.querySelector(".winner_time");
 
     (winnerCar as HTMLElement).textContent = `${name}`;
-    (winnerTime as HTMLElement).textContent = `[${time}]s`;
+    (winnerTime as HTMLElement).textContent = ` - ${time}s`;
     winnerShow.setAttribute("style", `display: ${display};`);
   }
 }

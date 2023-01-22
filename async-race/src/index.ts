@@ -25,7 +25,7 @@ const cars = new DrawCar();
 const drive = new Drive();
 
 const winners = new Winners();
-winners.deleteWinner(1);
+/* winners.deleteWinner(1); */
 
 const table = new WinnersTable();
 
@@ -97,7 +97,6 @@ document.querySelector(".create_btn")?.addEventListener("click", () => {
 });
 
 document.querySelector(".update_btn")?.addEventListener("click", () => {
-  console.log("click update");
   updateColor = (document.querySelector(
     ".update_color_input"
   ) as HTMLInputElement).value;
@@ -161,7 +160,6 @@ const raceBtn = document.querySelector(".btn_race");
 const resetBtn = document.querySelector(".btn_reset");
 
 (raceBtn as HTMLElement).addEventListener("click", () => {
-  console.log("NEW RACE!!!");
   if (raceBtn?.getAttribute("is-pushed") === "true") {
     console.log("All engines are already started");
     return;
@@ -283,17 +281,25 @@ let sort: string;
   }
 );
 
+const deleteRow = document.querySelector(".removable_row") as HTMLElement;
+if (deleteRow) {
+  winners.deleteWinner(1);
+}
+
 winners.getWinners().then((winner) => {
   if (winner.length > 0) {
-    (document.querySelector(".removable_row") as HTMLElement).remove();
+    if (deleteRow) {
+      deleteRow.remove();
+    }
+    table.resultsProcessing(winner, 0);
   }
-
-  table.resultsProcessing(winner, 0);
 });
 
 (document.querySelector(".th_time") as HTMLElement).addEventListener(
   "click",
   () => {
+    const currentState = cars.getState();
+    state.currentBoardPage = currentState.currentBoardPage;
     sort = "time";
     (document.querySelector(".tbody") as HTMLElement).innerHTML = "";
     winners
@@ -307,10 +313,8 @@ winners.getWinners().then((winner) => {
       order = "ASC";
     }
 
-    const currentState = cars.getState();
     currentState.sort = sort;
     currentState.order = order;
-    currentState.currentBoardPage = state.currentBoardPage;
     localStorage.setItem("state", JSON.stringify(currentState));
   }
 );
@@ -318,12 +322,17 @@ winners.getWinners().then((winner) => {
 (document.querySelector(".th_wins") as HTMLElement).addEventListener(
   "click",
   () => {
+    const currentState = cars.getState();
+    state.currentBoardPage = currentState.currentBoardPage;
     sort = "wins";
     (document.querySelector(".tbody") as HTMLElement).innerHTML = "";
     winners
-      .getSortedWinners(sort, order, state.currentBoardPage)
+      .getSortedWinners(sort, order, currentState.currentBoardPage)
       .then((result) => {
-        table.resultsProcessing(result, (state.currentBoardPage - 1) * 10);
+        table.resultsProcessing(
+          result,
+          (currentState.currentBoardPage - 1) * 10
+        );
       });
     if (order === "ASC") {
       order = "DESC";
@@ -331,10 +340,8 @@ winners.getWinners().then((winner) => {
       order = "ASC";
     }
 
-    const currentState = cars.getState();
     currentState.sort = sort;
     currentState.order = order;
-    currentState.currentBoardPage = state.currentBoardPage;
     localStorage.setItem("state", JSON.stringify(currentState));
   }
 );

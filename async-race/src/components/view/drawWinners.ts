@@ -39,7 +39,7 @@ export default class WinnersTable {
           if (winnerCar !== undefined) {
             this.page.createTableRow(
               carId,
-              (3 - 1) * 10 + result.length,
+              (state.currentBoardPage - 1) * 10 + result.length,
               color,
               name,
               winnerCar.wins,

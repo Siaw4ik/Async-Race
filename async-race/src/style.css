@@ -279,4 +279,9 @@ th, td {
   font-size: 22px;
   text-align: center;
 }
+.th_time,
+.th_wins {
+  cursor: pointer;
+  color: #ff5a00;
+}
 

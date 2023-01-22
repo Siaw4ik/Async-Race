@@ -6,13 +6,13 @@ export default class Winners {
       method: "GET",
     });
     if (response.status === 404) {
-      console.log("No such info about specified Car");
+      console.log(`No such info about Winner - ${id}`);
       throw new Error("Error 404");
     }
     if (response.status === 200) {
-      console.log(`Winner is: ${id}`);
+      console.log(`Winner is ${id}`);
     }
-    const result = await response.json();
+    const result: Winner = await response.json();
 
     return result;
   }
@@ -22,10 +22,10 @@ export default class Winners {
       method: "DELETE",
     });
     if (response.status === 404) {
-      console.log("There is no such car in garage!");
+      console.log(`No such Winner - ${id} in WinnersTable!`);
     }
     if (response.status === 200) {
-      console.log(`Car wit id: ${id} was successfully deleted!`);
+      console.log(`Winner - ${id} was successfully deleted!`);
     }
   }
 
@@ -41,13 +41,15 @@ export default class Winners {
       },
       body: JSON.stringify({ id: carId, wins: carWins, time: carTime }),
     });
-    if (response.status === 404) {
-      console.log("No such info about specified Car");
+    if (response.status === 500) {
+      console.log(
+        `Error: Insert failed, duplicate id. Winner-${carId} already added`
+      );
     }
     if (response.status === 201) {
       console.log(`Winner is: ${carId}`);
     }
-    const result = await response.json();
+    const result: Winner = await response.json();
 
     return result;
   }
@@ -65,12 +67,12 @@ export default class Winners {
       body: JSON.stringify({ wins: carWins, time: carTime }),
     });
     if (response.status === 404) {
-      console.log("No such info about specified Car!");
+      console.log(`No such Winner - ${carId} in WinnersTable!`);
     }
     if (response.status === 200) {
-      console.log(`Winner with id:${carId} has been updated successfully!`);
+      console.log(`Winner - ${carId} was updated!`);
     }
-    const result = await response.json();
+    const result: Winner = await response.json();
 
     return result;
   }
@@ -84,7 +86,7 @@ export default class Winners {
     );
 
     if (response.status === 200) {
-      console.log(`Result successfully added to the score board!`);
+      console.log(`Result added to the WinnersTable!`);
       const header = response.headers;
       (document.querySelector(
         ".winners_header_h2"
@@ -100,7 +102,7 @@ export default class Winners {
       }
     }
 
-    const result = response.json();
+    const result: Winner[] = await response.json();
 
     return result;
   }
@@ -121,7 +123,7 @@ export default class Winners {
       console.log(`${sort} sorted successfully in ${order} order!`);
     }
 
-    const result = response.json();
+    const result: Winner[] = await response.json();
 
     return result;
   }
