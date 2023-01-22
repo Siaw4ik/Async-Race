@@ -123,10 +123,6 @@ export default class DrawCar {
                   (state.currentBoardPage - 1) * 10
                 );
               }
-              /* this.table.resultsProcessing(
-                result,
-                (state.currentBoardPage - 1) * 10
-              ); */
             });
         }
       });
