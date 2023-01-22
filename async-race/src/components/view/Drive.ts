@@ -46,7 +46,6 @@ export default class Drive {
           );
         })
         .then((res) => {
-          console.log(res);
           if (res) {
             if (this.raceBoard.length === 0) {
               this.raceBoard.push({
