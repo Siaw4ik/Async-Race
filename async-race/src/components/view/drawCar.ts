@@ -227,7 +227,12 @@ export default class DrawCar {
       const randomCColor = Math.floor(Math.random() * 255);
       const randomName = randomNameArr[Math.floor(Math.random() * 20)];
       const randomCar = randomCarArr[Math.floor(Math.random() * 20)];
-      const carColor = `rgb(${randomAColor}, ${randomBColor}, ${randomCColor})`;
+
+      const carColor = `#${randomAColor.toString(16)}${randomBColor.toString(
+        16
+      )}${randomCColor.toString(16)}`;
+      console.log(carColor);
+      /* const carColor = `rgb(${randomAColor}, ${randomBColor}, ${randomCColor})`; */
       const carName = `${randomCar} ${randomName}`;
 
       arrFetch.push(

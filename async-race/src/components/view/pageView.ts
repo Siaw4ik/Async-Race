@@ -64,7 +64,7 @@ export default class PagesView {
           <div class="winners_page">
             <div class="winners_header">
               <h2 class="winners_header_h2">Winners</h2>
-              <p class="winners_header_p">Page</p>
+              <p class="winners_header_p">Page #1</p>
             </div>
             <table class="winners_result">
               <thead class"t_head">
