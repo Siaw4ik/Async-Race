@@ -15,11 +15,11 @@ Unfortunately there is no deployment for this application. You need to download 
 
 ## 2. Async-Race. Setup and Running.
 
-- Clone this repo: `$ git clone hhttps://github.com/Siaw4ik/Async-Race`.
+- Clone this repo: `$ git clone https://github.com/Siaw4ik/Async-Race`.
 - Open in it development environment.
 - `cd async-race`
 - Install dependencies: `$ npm install`.
 - use the command to fix ESLint errors `npm run lint -- --fix`
 - Start app: `$ npm start`.
 
-  **Use App**
+## Use App
